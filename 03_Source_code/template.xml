@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wormsim.inputfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:noNamespaceSchemaLocation="wormsim.xsd" >
+       <simulation>
+              <surveillance nr.skin-snips="2" individual-output="false">
+                     <start year="2000" month="0" delay="-2"/>
+                     <stop year="2025" month="1"/>
+                     <interval years="0" months="1"/>
+ 		             <age.classes>
+        	             <age.class age.limit="5"/>
+        	             <age.class age.limit="10"/>
+        	             <age.class age.limit="20"/>
+        	             <age.class age.limit="30"/>
+        	             <age.class age.limit="50"/>
+        	             <age.class age.limit="70"/>
+        	             <age.class age.limit="90"/>
+              		</age.classes>
+              </surveillance>
+              <warming.up duration="200"/>
+              <standard.population>
+                     <age.group age.limit="5" n.males="1401" n.females="1353"/>
+                     <age.group age.limit="10" n.males="1769" n.females="1507"/>
+                     <age.group age.limit="15" n.males="1739" n.females="1465"/>
+                     <age.group age.limit="20" n.males="1085" n.females="921"/>
+                     <age.group age.limit="30" n.males="1409" n.females="1738"/>
+                     <age.group age.limit="50" n.males="2388" n.females="2821"/>
+                     <age.group age.limit="90" n.males="1208" n.females="1237"/>
+              </standard.population>
+       </simulation>
+       <demography>
+              <the.reaper max.population.size="440" reap="0.1" delay="-3"/>
+              <life.table>
+                     <survival age.limit="5" male.survival="0.804" female.survival="0.804"/>
+                     <survival age.limit="10" male.survival="0.772" female.survival="0.772"/>
+                     <survival age.limit="15" male.survival="0.760" female.survival="0.760"/>
+                     <survival age.limit="20" male.survival="0.740" female.survival="0.740"/>
+                     <survival age.limit="30" male.survival="0.686" female.survival="0.686"/>
+                     <survival age.limit="50" male.survival="0.509" female.survival="0.509"/>
+                     <survival age.limit="90" male.survival="0.000" female.survival="0.000"/>
+              </life.table>
+              <fertility.table delay="-4">
+                     <fertility age.limit="5" birth.rate="0"/>
+                     <fertility age.limit="10" birth.rate="0"/>
+                     <fertility age.limit="15" birth.rate="0"/>
+                     <fertility age.limit="20" birth.rate="0.109"/>
+                     <fertility age.limit="30" birth.rate="0.300"/>
+                     <fertility age.limit="50" birth.rate="0.119"/>
+                     <fertility age.limit="90" birth.rate="0.0"/>
+              </fertility.table>
+              <initial.population>
+                     <age.group age.limit="5" n.males="4" n.females="4"/>
+                     <age.group age.limit="10" n.males="5" n.females="5"/>
+                     <age.group age.limit="15" n.males="3" n.females="3"/>
+                     <age.group age.limit="20" n.males="3" n.females="3"/>
+                     <age.group age.limit="30" n.males="4" n.females="4"/>
+                     <age.group age.limit="50" n.males="6" n.females="6"/>
+                     <age.group age.limit="90" n.males="4" n.females="4"/>
+              </initial.population>
+       </demography>
+       <disease.processes>
+              <disease.process name="damage-due-to-mf" susceptibility.shape.param="2">
+					           <regression.rate fun.nr="1" a="0"  b="0" c="-1"/>
+                     <disease.stage name="stage-zero" treshold="0"/>
+                     <disease.stage name="stage-one" treshold="100">
+                            <symptom name="morbStage1"/>
+                     </disease.stage>
+                     <disease.stage name="stage-two" treshold="1e15">
+                            <symptom name="morbStage2"/>
+                     </disease.stage>
+              </disease.process>
+       </disease.processes>
+       <symptom.defs>
+              <symptom.def name="morbStage1">
+                     <pct-life-expectancy-reduction dist.nr="0" mean="0"/>
+              </symptom.def>
+              <symptom.def name="morbStage2">
+                     <pct-life-expectancy-reduction dist.nr="0" mean="0.5"/>
+              </symptom.def>
+       </symptom.defs>
+       <exposure>
+              <initial.foi duration="7.5" foi="4"/>
+              <male>
+                     <exposure.function fun.nr="1" a="0.05" c="1"/>
+                     <exposure.index dist.nr="4" min="0" max="20" p1="4.283"/>
+              </male>
+              <female>
+                     <exposure.function fun.nr="1" a="0.035" c="0.7"/>
+                     <exposure.index dist.nr="4" min="0" max="20" p1="4.283"/>
+              </female>
+       </exposure>
+       <immunity>
+              <male alpha="0" beta="1">
+                     <immunity.function fun.nr="0" a="1"/>
+                     <immunity.index dist.nr="0" min="0" max="20"/>
+              </male>
+              <female alpha="0" beta="1">
+                     <immunity.function fun.nr="0" a="1"/>
+                     <immunity.index dist.nr="0" min="0" max="20"/>
+              </female>
+       </immunity>
+       <worm mf-lifespan="9" monthly.event.delay="+1">
+              <lifespan dist.nr="3" min="0" max="50" mean="10" p1="3.76"/>
+              <prepatent.period dist.nr="0" mean="1"/>
+              <mating cycle="3" male.potential="100"/>
+              <age.dependent.mf-production>
+                     <mf-production age.limit="0" production="1"/>
+                     <mf-production age.limit="5" production="1"/>
+                     <mf-production age.limit="20" production="0"/>
+              </age.dependent.mf-production>
+              <skin.mf-density.per.worm fun.nr="1" a="7.6" c="-1"/>
+              <skin.dispersal dist.nr="2" min="0" max="5"/>
+              <skin-snip.variability dist.nr="5"/>
+       </worm>
+       <fly transmission.probability="0.07345">
+              <L1-uptake fun.nr="3" a="1.2" b="0.0213" c="0.0861"/>
+              <monthly.biting.rates relative.biting.rate="0.430">
+                     <mbr month="1"  rate="2670"/>
+                     <mbr month="2"  rate="2350"/>
+                     <mbr month="3"  rate="1500"/>
+                     <mbr month="4"  rate="1920"/>
+                     <mbr month="5"  rate="1940"/>
+                     <mbr month="6"  rate="1690"/>
+                     <mbr month="7"  rate="2630"/>
+                     <mbr month="8"  rate="3410"/>
+                     <mbr month="9"  rate="3010"/>
+                     <mbr month="10" rate="3290"/>
+                     <mbr month="11" rate="3750"/>
+                     <mbr month="12" rate="2690"/>
+              </monthly.biting.rates>
+       </fly>
+       <mass.treatment v58="true">
+           <compliance.options>
+                <compliance name="default" fraction.excluded="0.00" fraction.malabsorption="0" compliance.model="0">
+		                 <age.and.sex.specific.compliance age.limit="5" male.compliance="1" female.compliance="1"/>
+                     <age.and.sex.specific.compliance age.limit="10" male.compliance="1" female.compliance="1"/>
+                     <age.and.sex.specific.compliance age.limit="15" male.compliance="1" female.compliance="1"/>
+                     <age.and.sex.specific.compliance age.limit="20" male.compliance="1" female.compliance="1"/>
+                     <age.and.sex.specific.compliance age.limit="30" male.compliance="1" female.compliance="1"/>
+                     <age.and.sex.specific.compliance age.limit="50" male.compliance="1" female.compliance="1"/>
+                     <age.and.sex.specific.compliance age.limit="90" male.compliance="1" female.compliance="1"/>
+                </compliance>
+           </compliance.options>
+           <treatment.rounds>
+             <treatment.round year="2000" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2001" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2002" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2003" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2004" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2005" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2006" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2007" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2008" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2009" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2010" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2011" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2012" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2013" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2014" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2015" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2016" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2017" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2018" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2019" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2020" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2021" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2022" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2023" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2024" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2025" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2026" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2027" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2028" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2029" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2030" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2031" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2032" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2033" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2034" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+             <treatment.round year="2035" month="0" drug="ivermectin" coverage="0.7" delay="-1"/>
+           </treatment.rounds>
+           <v58.drugs>
+                <v58.drug name="ivermectin" compliance="default" include.prepatent.worms="true">
+                    <v58.treatment.effects permanent.reduction.mf-production="0.349" period.of.recovery="0.875" shape.parameter.recovery.function="1.483" fraction.killed="0">
+                        <fraction.mf.surviving dist.nr="0" mean="0.0"/>
+                        <treatment.effect.variability dist.nr="3" mean="1.0" p1="2"/>
+                    </v58.treatment.effects>
+                </v58.drug>
+
+            </v58.drugs>
+
+       </mass.treatment>
+       <vector.control>
+      </vector.control>
+</wormsim.inputfile>
